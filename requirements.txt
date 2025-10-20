@@ -4,4 +4,4 @@ sentence-transformers
 numpy
 streamlit
 python-dotenv
-
+openai
