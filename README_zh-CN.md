@@ -1,49 +1,49 @@
-[English](./README.md) | [简体中文](./README_zh-CN.md)
+# 简体中文
 
-# Paper Semantic Search
+# 论文语义搜索
 
-Find similar papers using semantic search. Supports both local models (free) and OpenAI API (better quality).
+使用语义搜索查找相似的论文。支持本地模型（免费）和 OpenAI API（质量更高）。
 
 ![Web UI](./assets/webui.png)
 
-## Features
+## 功能
 
-- Request for papers from OpenReview (e.g., ICLR2026 submissions)
-- Semantic search with example papers or text queries
-- Support embedding caching
-- Embed model support: Open-source (e.g., all-MiniLM-L6-v2) or OpenAI
+- 从 OpenReview 请求论文（例如，ICLR2026 提交的论文）
+- 使用示例论文或文本查询进行语义搜索
+- 支持嵌入缓存
+- 支持的嵌入模型：开源模型（例如，all-MiniLM-L6-v2）或 OpenAI
 
-## Quick Start
+## 快速入门
 
-### Web UI (Recommended)
+### Web UI (推荐)
 
-1. **Prepare Papers**: Follow the instructions in "Prepare Papers" to download the paper data.
-2. **Launch the App**:
+1. **准备论文**: 参照 "准备论文" 的说明下载论文数据.
+2. **启动应用**:
    ```bash
    streamlit run app.py
    ```
 
-### As a Library
+### 作为库使用
 
-#### Installation
+#### 安装
 
-For OpenAI model (requires API key):
+对于 OpenAI 模型（需要 API 密钥）：
 
 ```bash
 pip install -r requirements.txt
 ```
 
-For local model (free, but larger installation):
+对于本地模型（免费，但安装包更大）：
 
 ```bash
 pip install -r requirements.txt
 pip install -r requirements-local.txt
 ```
 
-#### 1. Prepare Papers
+#### 1. 准备论文
 
 ```python
-from src.crawl import crawl_papers
+from crawl import crawl_papers
 
 crawl_papers(
     venue_id="ICLR.cc/2026/Conference/Submission",
@@ -51,21 +51,21 @@ crawl_papers(
 )
 ```
 
-#### 2. Search Papers
+#### 2. 搜索论文
 
 ```python
-from src.search import PaperSearcher
+from search import PaperSearcher
 
-# Local model (free)
+# 本地模型（免费）
 searcher = PaperSearcher('iclr2026_papers.json', model_type='local')
 
-# OpenAI model (better, requires API key)
+# OpenAI 模型（效果更好，需要 API 密钥）
 # export OPENAI_API_KEY='your-key'
 # searcher = PaperSearcher('iclr2026_papers.json', model_type='openai')
 
 searcher.compute_embeddings()
 
-# Search with example papers that you are interested in
+# 使用你感兴趣的示例论文进行搜索
 examples = [
     {
         "title": "Part-X-MLLM: Part-aware 3D Multimodal Large Language Model",
@@ -75,26 +75,26 @@ examples = [
 
 results = searcher.search(examples=examples, top_k=100)
 
-# Or search with text query
+# 或者使用文本查询
 results = searcher.search(query="interesting topics", top_k=100)
 
 searcher.display(results, n=10)
 searcher.save(results, 'results.json')
 ```
 
-## How It Works
+## 工作原理
 
-1. Paper titles and abstracts are converted to embeddings
-2. Embeddings are cached automatically
-3. Your query is embedded using the same model
-4. Cosine similarity finds the most similar papers
-5. Results are ranked by similarity score
+1.  论文标题和摘要被转换为嵌入向量
+2.  嵌入向量会自动缓存
+3.  你的查询将使用相同的模型进行嵌入
+4.  余弦相似度用于查找最相似的论文
+5.  结果按相似度得分排序
 
-## Cache
+## 缓存
 
-Embeddings are cached as `cache_<filename>_<hash>_<model_name>.npy`. Delete to recompute.
+嵌入向量被缓存为 `cache_<filename>_<hash>_<model_name>.npy`。删除该文件以重新计算。
 
-## Example Output
+## 输出示例
 
 ```
 ================================================================================
@@ -114,17 +114,17 @@ Top 100 Results (showing 10)
    https://openreview.net/forum?id=h7qdCvhMdb
 ```
 
-## Tips
+## 提示
 
-- Use 1-5 example papers for best results, or a paragraph of description of your interested topic
-- Local model is good enough for most cases
-- OpenAI model for critical search (~$1 for 18k queries)
+- 使用 1-5 篇示例论文或一段你感兴趣的主题描述以获得最佳结果
+- 在大多数情况下，本地模型已经足够好
+- 对于关键搜索，请使用 OpenAI 模型（约 1 美元可查询 18k 次）
 
-If it's useful, please consider giving a star~
+如果这个项目对你有用，请考虑给个 star~
 
-## Citation
+## 如何引用
 
-If you find this repository useful, please cite it as:
+如果你觉得这个项目有用，请引用它：
 
 ```bibtex
 @misc{SearchPaperByEmbedding,
