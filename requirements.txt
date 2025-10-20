@@ -1,0 +1,6 @@
+requests
+numpy
+scikit-learn
+sentence-transformers
+openai
+
