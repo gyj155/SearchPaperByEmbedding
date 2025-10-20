@@ -1,6 +1,7 @@
 requests
-numpy
 scikit-learn
 sentence-transformers
-openai
+numpy
+streamlit
+python-dotenv
 
